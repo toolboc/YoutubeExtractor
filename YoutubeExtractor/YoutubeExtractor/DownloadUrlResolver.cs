@@ -95,15 +95,15 @@ namespace YoutubeExtractor
 
                 string htmlPlayerVersion = GetHtml5PlayerVersion(json);
 
-                foreach (VideoInfo info in infos)
-                {
-                    info.HtmlPlayerVersion = htmlPlayerVersion;
+                var info = infos.First(inf => inf.VideoType == VideoType.Mp4);
 
-                    if (decryptSignature && info.RequiresDecryption)
-                    {
-                        DecryptDownloadUrl(info);
-                    }
+                info.HtmlPlayerVersion = htmlPlayerVersion;
+
+                if (decryptSignature && info.RequiresDecryption)
+                {
+                    DecryptDownloadUrl(info);
                 }
+                
 
                 return infos;
             }
